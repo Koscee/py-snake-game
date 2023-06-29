@@ -26,11 +26,13 @@ screen.onkey(snake.down, "Down")
 screen.onkey(snake.left, "Left")
 screen.onkey(snake.right, "Right")
 
+
 def hit_wall():
     return snake.head.xcor() > BOUNDARY \
-           or snake.head.xcor() < -BOUNDARY \
-           or snake.head.ycor() > BOUNDARY \
-           or snake.head.ycor() < -BOUNDARY
+               or snake.head.xcor() < -BOUNDARY \
+               or snake.head.ycor() > BOUNDARY \
+               or snake.head.ycor() < -BOUNDARY
+
 
 game_is_on = True
 while game_is_on:
@@ -41,11 +43,18 @@ while game_is_on:
     # detect collision with food
     if snake.head.distance(food) < 15:
         food.refresh()
+        snake.extend()
         score_board.increase_score()
 
     # detect collision with wall
     if hit_wall():
         game_is_on = False
         score_board.game_over()
+
+    # detect collision with tail
+    for segment in snake.segments[1:]:
+        if snake.head.distance(segment) < 10:
+            game_is_on = False
+            score_board.game_over()
 
 screen.exitonclick()

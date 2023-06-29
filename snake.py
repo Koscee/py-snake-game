@@ -9,7 +9,7 @@ RIGHT = 0
 
 class Snake:
     _segment_unit_width = 20
-    _no_of_segment = 3
+    _initial_segment_count = 3
 
     def __init__(self):
         self.segments: list[Turtle] = []
@@ -17,12 +17,20 @@ class Snake:
         self.head = self.segments[0]
 
     def _create(self):
-        for i in range(0, self._no_of_segment):
-            new_segment = Turtle("square")
-            new_segment.color("white")
-            new_segment.penup()
-            new_segment.goto(x=-(i * self._segment_unit_width), y=0)
-            self.segments.append(new_segment)
+        for i in range(0, self._initial_segment_count):
+            position = (-(i * self._segment_unit_width), 0)
+            self.add_segment(position)
+
+    def add_segment(self, position):
+        new_segment = Turtle("square")
+        new_segment.color("white")
+        new_segment.penup()
+        new_segment.goto(position)
+        self.segments.append(new_segment)
+
+    def extend(self):
+        """adds a new segment to the snake."""
+        self.add_segment(self.segments[-1].pos())
 
     def move(self):
         """moves snake"""

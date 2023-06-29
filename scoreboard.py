@@ -23,3 +23,7 @@ class ScoreBoard(Turtle):
     def increase_score(self):
         self._score += 2
         self._display_score()
+
+    def game_over(self):
+        self.home()
+        self.write("GAME OVER", align=ALIGNMENT, font=FONT)

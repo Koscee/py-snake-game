@@ -4,6 +4,8 @@ from food import Food
 from scoreboard import ScoreBoard
 import time
 
+BOUNDARY = 280
+
 screen = Screen()
 screen.setup(width=600, height=600)
 screen.bgcolor("black")
@@ -24,6 +26,11 @@ screen.onkey(snake.down, "Down")
 screen.onkey(snake.left, "Left")
 screen.onkey(snake.right, "Right")
 
+def hit_wall():
+    return snake.head.xcor() > BOUNDARY \
+           or snake.head.xcor() < -BOUNDARY \
+           or snake.head.ycor() > BOUNDARY \
+           or snake.head.ycor() < -BOUNDARY
 
 game_is_on = True
 while game_is_on:
@@ -36,5 +43,9 @@ while game_is_on:
         food.refresh()
         score_board.increase_score()
 
+    # detect collision with wall
+    if hit_wall():
+        game_is_on = False
+        score_board.game_over()
 
 screen.exitonclick()

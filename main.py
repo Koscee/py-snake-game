@@ -29,9 +29,9 @@ screen.onkey(snake.right, "Right")
 
 def hit_wall():
     return snake.head.xcor() > BOUNDARY \
-               or snake.head.xcor() < -BOUNDARY \
-               or snake.head.ycor() > BOUNDARY \
-               or snake.head.ycor() < -BOUNDARY
+           or snake.head.xcor() < -BOUNDARY \
+           or snake.head.ycor() > BOUNDARY \
+           or snake.head.ycor() < -BOUNDARY
 
 
 game_is_on = True
@@ -48,13 +48,13 @@ while game_is_on:
 
     # detect collision with wall
     if hit_wall():
-        game_is_on = False
-        score_board.game_over()
+        score_board.reset()
+        snake.reset()
 
     # detect collision with tail
     for segment in snake.segments[1:]:
         if snake.head.distance(segment) < 10:
-            game_is_on = False
-            score_board.game_over()
+            score_board.reset()
+            snake.reset()
 
 screen.exitonclick()
